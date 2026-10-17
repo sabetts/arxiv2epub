@@ -61,3 +61,33 @@ def test_links_rewritten_across_files():
     build.prepare(paper, "cover.xhtml")
     intro = str(paper.chapters[0].element)
     assert 'href="references.xhtml#bib.bib1"' in intro
+
+
+def test_foreign_object_flattened_to_html():
+    from bs4 import BeautifulSoup
+
+    from arxiv_epub.htmlutil import flatten_foreign_objects
+
+    markup = (
+        '<article class="ltx_document">'
+        '<svg class="ltx_picture"><foreignObject>'
+        '<span class="ltx_foreignobject_container"><span class="ltx_foreignobject_content">'
+        "<table><tr><td>Key Questions</td></tr></table>"
+        "</span></span></foreignObject></svg>"
+        "</article>"
+    )
+    article = BeautifulSoup(markup, "lxml").select_one("article")
+    assert flatten_foreign_objects(article) == 1
+    assert article.find("foreignobject") is None
+    assert article.find(class_="ltx_foreignobject_flatten") is not None
+    assert "Key Questions" in article.get_text()
+
+
+def test_plain_svg_is_preserved():
+    from bs4 import BeautifulSoup
+
+    from arxiv_epub.htmlutil import flatten_foreign_objects
+
+    article = BeautifulSoup('<article><svg><path d="M0 0"/></svg></article>', "lxml").select_one("article")
+    assert flatten_foreign_objects(article) == 0
+    assert article.find("svg") is not None

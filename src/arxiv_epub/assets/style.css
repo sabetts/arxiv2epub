@@ -1,0 +1,177 @@
+html {
+  font-size: 100%;
+}
+
+body {
+  font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  line-height: 1.5;
+  margin: 0 5%;
+  text-align: left;
+  word-wrap: break-word;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  line-height: 1.25;
+  margin: 1.6em 0 0.6em;
+  page-break-after: avoid;
+}
+
+h1 { font-size: 1.7em; }
+h2 { font-size: 1.4em; }
+h3 { font-size: 1.2em; }
+h4 { font-size: 1.05em; }
+
+p {
+  margin: 0 0 0.8em;
+}
+
+a {
+  color: #1a4b7a;
+  text-decoration: none;
+}
+
+.ltx_tag {
+  font-weight: normal;
+  margin-right: 0.4em;
+}
+
+.ltx_title_abstract {
+  font-size: 1.05em;
+}
+
+.ltx_abstract {
+  margin: 1em 0;
+  padding: 0 1em;
+  border-left: 3px solid #ccc;
+  font-size: 0.95em;
+}
+
+section {
+  margin-bottom: 1em;
+}
+
+figure {
+  margin: 1.2em 0;
+  text-align: center;
+  page-break-inside: avoid;
+}
+
+figure img,
+img.ltx_graphics {
+  max-width: 100%;
+  height: auto;
+}
+
+figcaption {
+  font-size: 0.85em;
+  color: #333;
+  text-align: left;
+  margin-top: 0.4em;
+}
+
+table, .ltx_tabular {
+  border-collapse: collapse;
+  margin: 1em auto;
+  font-size: 0.9em;
+}
+
+td, th {
+  padding: 0.2em 0.5em;
+}
+
+pre, code {
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+  font-size: 0.9em;
+}
+
+pre {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  background: #f4f4f4;
+  padding: 0.6em;
+  border-radius: 3px;
+}
+
+blockquote {
+  margin: 1em 1.5em;
+  font-style: italic;
+}
+
+ul, ol {
+  margin: 0 0 0.8em 1.2em;
+  padding: 0;
+}
+
+li {
+  margin: 0.2em 0;
+}
+
+math {
+  font-size: 1.05em;
+}
+
+math[display="block"] {
+  display: block;
+  margin: 1em auto;
+  text-align: center;
+}
+
+.ltx_note {
+  font-size: 0.85em;
+  color: #444;
+}
+
+.ltx_note_mark {
+  font-size: 0.75em;
+  vertical-align: super;
+  line-height: 0;
+}
+
+.ltx_note_outer {
+  display: block;
+  margin: 0.3em 0 0.3em 1em;
+}
+
+.ltx_bibliography ol {
+  list-style: none;
+  margin-left: 0;
+}
+
+.ltx_bibitem {
+  margin-bottom: 0.6em;
+  font-size: 0.9em;
+}
+
+.ltx_bibitem .ltx_tag {
+  margin-right: 0.6em;
+}
+
+.titlepage {
+  text-align: center;
+  margin-top: 15%;
+}
+
+.titlepage h1 {
+  font-size: 1.9em;
+  margin-bottom: 0.5em;
+}
+
+.titlepage .authors {
+  font-size: 1.05em;
+  margin: 1em 0;
+}
+
+.titlepage .source {
+  font-size: 0.85em;
+  color: #555;
+  margin-bottom: 2em;
+}
+
+.titlepage .ltx_abstract {
+  text-align: left;
+}
+
+.titlepage figure {
+  margin-top: 1.5em;
+}

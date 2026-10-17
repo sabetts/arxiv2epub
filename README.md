@@ -1,8 +1,10 @@
 # arxiv-epub
 
-Convert an arXiv **experimental HTML** paper ([arxiv.org/html/](https://info.arxiv.org/about/accessible_HTML.html))
-into a reflowable EPUB 3, with figures, MathML equations, footnotes and the
-bibliography bundled for offline reading.
+Convert one or more arXiv **experimental HTML** papers
+([arxiv.org/html/](https://info.arxiv.org/about/accessible_HTML.html)) into a
+reflowable EPUB 3, with figures, MathML equations, footnotes and the
+bibliography bundled for offline reading. Pass several papers to bind them into
+a single collection.
 
 ## Install / run
 
@@ -14,12 +16,19 @@ uv run arxiv-epub https://arxiv.org/abs/2402.08954 -o paper.epub
 uv run arxiv-epub https://arxiv.org/html/2610.06805v1 -v
 ```
 
+Bundle multiple papers into one book:
+
+```bash
+uv run arxiv-epub 2610.06805 1706.03762 -t "World Models Collection"
+```
+
 Or as a library:
 
 ```python
 from arxiv_epub import convert
 
 path = convert("2610.06805", output="paper.epub")
+collection = convert(["2610.06805", "1706.03762"], output="collection.epub", title="Papers")
 ```
 
 ## What it does
@@ -35,15 +44,21 @@ path = convert("2610.06805", output="paper.epub")
    the book.
 7. **Assemble** — builds the EPUB (nested table of contents, text title page,
    metadata, stylesheet) with [EbookLib](https://github.com/aerkalov/ebooklib).
+   Multiple papers share one stylesheet and image store; each paper gets its own
+   title page and chapter files, grouped under its entry in the table of
+   contents.
 
 ## CLI
 
 ```
-arxiv-epub REFERENCE [-o OUTPUT] [--raw-dir DIR] [-f] [-v]
+arxiv-epub REFERENCE [REFERENCE ...] [-o OUTPUT] [-t TITLE] [--raw-dir DIR] [-f] [-v]
 ```
 
-- `REFERENCE` — id (`2402.08954`, `2402.08954v2`, `hep-th/9901001`) or URL.
-- `-o, --output` — output path (defaults to the sanitized paper title).
+- `REFERENCE ...` — one or more ids (`2402.08954`, `2402.08954v2`,
+  `hep-th/9901001`) or URLs. Multiple become a single book.
+- `-o, --output` — output path (defaults to the sanitized paper title, or the
+  collection title).
+- `-t, --title` — title for a multi-paper collection.
 - `--raw-dir` — save the fetched HTML for debugging.
 - `-f, --force` — overwrite the output file.
 - `-v, --verbose` — progress output.

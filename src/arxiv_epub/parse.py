@@ -5,6 +5,7 @@ from dataclasses import dataclass, field
 from bs4 import BeautifulSoup, Tag
 
 from .arxiv import PaperMeta
+from .htmlutil import flatten_foreign_objects
 
 STRIP_CLASSES = ("ltx_pagination", "ltx_role_newpage", "ltx_page_navbar", "ltx_TOC")
 _HEADINGS = ("h1", "h2", "h3", "h4", "h5", "h6")
@@ -89,6 +90,7 @@ def parse_document(html: str, meta: PaperMeta) -> ParsedPaper:
         raise ParseError("No LaTeXML article (article.ltx_document) found in the HTML")
 
     _strip_noise(article)
+    flatten_foreign_objects(article)
 
     title_el = article.select_one("h1.ltx_title_document")
     authors_el = article.select_one(".ltx_authors")

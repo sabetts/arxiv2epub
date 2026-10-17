@@ -7,6 +7,8 @@ from bs4 import Tag
 MATHML_NS = "http://www.w3.org/1998/Math/MathML"
 SVG_NS = "http://www.w3.org/2000/svg"
 
+_BLOCK_TAGS = {"table", "div", "p", "ol", "ul", "section", "figure", "blockquote", "pre"}
+
 
 def namespace_mathml(root: Tag) -> None:
     """Declare namespaces so MathML/SVG survive XHTML serialization."""
@@ -16,6 +18,34 @@ def namespace_mathml(root: Tag) -> None:
     for svg in root.find_all("svg"):
         if not svg.has_attr("xmlns"):
             svg["xmlns"] = SVG_NS
+
+
+def flatten_foreign_objects(root: Tag) -> int:
+    """Replace SVG <foreignObject> boxes (which readers do not render) with HTML.
+
+    LaTeXML wraps TikZ nodes, \\fbox output and minipages in SVG foreignObject
+    elements. Most e-readers show only the empty frame, so promote the embedded
+    markup back into the document flow. Returns the number of SVGs converted.
+    """
+    converted = 0
+    for svg in root.find_all("svg"):
+        foreign_objects = svg.find_all(["foreignobject", "foreignObject"])
+        if not foreign_objects:
+            continue
+
+        parts: list = []
+        for foreign_object in foreign_objects:
+            content = foreign_object.find(class_="ltx_foreignobject_content") or foreign_object
+            parts.extend(content.contents)
+
+        is_block = any(getattr(part, "name", None) in _BLOCK_TAGS for part in parts)
+        replacement = root.new_tag("div" if is_block else "span")
+        replacement["class"] = "ltx_foreignobject_flatten"
+        for part in parts:
+            replacement.append(part.extract())
+        svg.replace_with(replacement)
+        converted += 1
+    return converted
 
 
 def build_id_map(sources: Iterable[tuple[str, Tag]]) -> dict[str, str]:

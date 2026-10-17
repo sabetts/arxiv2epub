@@ -1,0 +1,32 @@
+[project]
+name = "arxiv-epub"
+version = "0.1.0"
+description = "Convert arXiv experimental HTML papers into EPUB"
+readme = "README.md"
+authors = [
+    { name = "Shawn Betts", email = "sabetts@gmail.com" }
+]
+requires-python = ">=3.13"
+dependencies = [
+    "beautifulsoup4>=4.15.0",
+    "ebooklib>=0.20",
+    "lxml>=6.1.3",
+    "requests>=2.34.2",
+]
+
+[project.scripts]
+arxiv-epub = "arxiv_epub.cli:main"
+
+[tool.pytest.ini_options]
+markers = [
+    "network: tests that hit arxiv.org over the network",
+]
+
+[build-system]
+requires = ["uv_build>=0.12.16,<0.13.0"]
+build-backend = "uv_build"
+
+[dependency-groups]
+dev = [
+    "pytest>=9.1.1",
+]

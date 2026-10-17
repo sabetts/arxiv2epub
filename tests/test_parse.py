@@ -58,6 +58,6 @@ def test_links_rewritten_across_files():
     from arxiv_epub import build
 
     paper = _parse()
-    build.prepare(paper)
+    build.prepare(paper, "cover.xhtml")
     intro = str(paper.chapters[0].element)
     assert 'href="references.xhtml#bib.bib1"' in intro

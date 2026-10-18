@@ -79,3 +79,7 @@ arxiv-epub REFERENCE [REFERENCE ...] [-o OUTPUT] [-t TITLE] [--raw-dir DIR] [-f]
 uv run pytest -m "not network"   # unit tests
 uv run pytest -m network         # end-to-end test against arxiv.org
 ```
+
+# Is this AI?
+
+Yep. Pure vibe-coded.
